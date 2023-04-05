@@ -142,8 +142,8 @@
   text-align: center;
 }
 .chapters-label:hover {
-    color: var(--dark-yellow);
-    transition: color 0.8s ease;
+  color: var(--dark-yellow);
+  transition: color 0.8s ease;
 }
 @media (max-width: 991.98px) {
   .chapters-label {
@@ -157,7 +157,7 @@
   .chapters-label:hover {
     color: var(--dark-yellow);
     transition: color 0.8s ease;
-}
+  }
 }
 @media (max-width: 767.98px) {
   .chapters-label {
@@ -195,22 +195,22 @@
   color: var(--dark-yellow);
 }
 .next__step a:hover {
-text-decoration: underline;
-}
-@media (max-width: 479.98px) {
-.next__step {
-  padding: 30px 30px 0px 30px;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 125%; /* 20/16 */
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--light-green);
-}
-.next__step a {
-  font-size: 14px;
-  color: var(--dark-yellow);
   text-decoration: underline;
 }
+@media (max-width: 479.98px) {
+  .next__step {
+    padding: 30px 30px 0px 30px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 125%; /* 20/16 */
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--light-green);
+  }
+  .next__step a {
+    font-size: 14px;
+    color: var(--dark-yellow);
+    text-decoration: underline;
+  }
 }
 /* next step */

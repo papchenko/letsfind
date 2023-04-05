@@ -1,55 +1,78 @@
+:root {
+  --white: #fff;
+  --dark: #191c1f;
+  --dark-grey: #1e2125;
+  --light-white: #eeeeee;
+  --light-white2: #fafafa;
+  --dark--blue: #38569f;
+  --dark-blue2: #38569f;
+  --light-blue: #17bed2;
+  --light-blue2: #4682b4;
+  --light-blue3: #4586ff;
+  --light-blue4: #00adb5;
+  --dark-yellow: #ff6600;
+  --light-yellow: #f9a743;
+  --dark-yellow2: #e6840e;
+  --light-green: #30be72;
+}
+
 .header {
-    padding-top: 60px;
-    padding-bottom: 60px;
-    /* background-color: rgba(24, 20, 20, 0.74); */
-    background: #14171a;
-    position: relative; 
+  padding-top: 60px;
+  padding-bottom: 60px;
+  /* background-color: rgba(24, 20, 20, 0.74); */
+  background: #14171a;
+  position: relative;
 }
 .header::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: radial-gradient(837.78% 378.29% at 69.44% -79.86%, rgba(31, 35, 39, 0) 0%, #191C1F 47.89%, rgba(31, 35, 39, 0) 100%);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: radial-gradient(
+    837.78% 378.29% at 69.44% -79.86%,
+    rgba(31, 35, 39, 0) 0%,
+    #191c1f 47.89%,
+    rgba(31, 35, 39, 0) 100%
+  );
 }
 .header__container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 30px;
-    position: relative;
-    z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 30px;
+  position: relative;
+  z-index: 2;
 }
 .header__item {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 .header__item:hover {
-    color: var(--dark-yellow2);
+  color: var(--dark-yellow2);
 }
 .header__icon {
-    flex: 0 0 40px;
+  flex: 0 0 40px;
 }
 .header__icon:hover {
-    transform: scale(1.2);
-    transition: transform 0.6s ease;
+  transform: scale(1.2);
+  transition: transform 0.6s ease;
 }
-.header__icon img{
-    width: 38px;
-    height: 38px;
+.header__icon img {
+  width: 38px;
+  height: 38px;
 }
 .header__body {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 .header__body:hover {
-    transform: scale(1.1);
-    transition: transform 0.6s ease;
+  transform: scale(1.1);
+  transition: transform 0.6s ease;
 }
 .header__text {
-    font-size: 20px;
-    line-height: 125%;
-    font-weight: 700;
-    text-transform: uppercase;
+  font-size: 20px;
+  line-height: 125%;
+  font-weight: 700;
+  text-transform: uppercase;
 }
