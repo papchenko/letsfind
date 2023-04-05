@@ -1,6 +1,6 @@
 ![img](https://raw.githubusercontent.com/papchenko/letsfind/982d9727abb3dd9179434c64514219993a9c164e/src/img/logo-git.svg)
 
-### letsfind - try find secrets locations!
+### Try find secrets locations!
 
 ##### How to use
 ```
