@@ -23,8 +23,6 @@
 
   padding-top: 180px;
   padding-bottom: 180px;
-  /* background: url("/src/img/*.*") center / cover no-repeat; */
-  /* background-color: #0930578f; */
   background-color: #1f2327;
   position: relative;
 }
@@ -113,6 +111,9 @@
   .intro__block {
     padding-top: 100px;
     padding-bottom: 0px;
+  }
+  .intro__title {
+    font-size: 38px;
   }
 }
 /* media */

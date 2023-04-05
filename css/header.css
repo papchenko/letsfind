@@ -19,9 +19,24 @@
 .header {
   padding-top: 60px;
   padding-bottom: 60px;
-  /* background-color: rgba(24, 20, 20, 0.74); */
   background: #14171a;
   position: relative;
+}
+@media (max-width: 479.98px) {
+  .header {
+    width: 100vw;
+    height: 100vh;
+  
+    padding-top: 230px;
+  }
+}
+@media (max-width: 360.98px) {
+  .header {
+    width: 100vw;
+    height: 100vh;
+  
+    padding-top: 130px;
+  }
 }
 .header::before {
   content: "";
