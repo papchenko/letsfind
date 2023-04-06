@@ -1,6 +1,6 @@
 "use strict";
 
-// smooth scroll
+// smooth scroll 
 SmoothScroll({
   animationTime: 1200,
   stepSize: 55,
@@ -56,3 +56,33 @@ const ssMoveTo = function () {
   });
 };
 ssMoveTo();
+
+// animation on load page
+function animationScroll() {
+  const items = document.querySelectorAll("[data-anim]");
+
+  const options = {
+    threshold: 0.2,
+  };
+
+  const callback = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animation");
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(callback, options);
+  items.forEach((item) => {
+    observer.observe(item);
+  });
+}
+
+function onLoad() {
+    window.addEventListener('load', () => {
+      document.documentElement.classList.add('animation-onload');
+    })
+}
+animationScroll();
+onLoad();

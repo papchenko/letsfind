@@ -47,3 +47,15 @@ body {
   margin: 0 auto;
   max-width: 1140px;
 }
+
+/* animation on load page */
+[data-anim] {
+  transform: translate(0rem, 3.125rem);
+  opacity: 0;
+  transition: all 0.8s;
+}
+[data-anim].animation {
+  transform: translate(0, 0);
+  opacity: 1;
+  transition: all 0.8s;
+}

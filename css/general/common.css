@@ -151,6 +151,14 @@
   font-weight: 700;
   text-transform: uppercase;
   text-align: center;
+
+  transform: translate(0px, -2.5rem);
+  opacity: 0;
+}
+.animation-onload .chapters-label {
+  transform: translate(0, 0);
+  opacity: 1;
+  transition: transform 2s ease, opacity 2s ease;
 }
 .chapters-label:hover {
   color: var(--dark-yellow);
