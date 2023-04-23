@@ -113,13 +113,15 @@
   }
 
 .button__back {
-  display: inline-block;
-  font-size: 16px;
-  color: var(--light-white);
-  border-radius: 40px;
-  font-weight: 700;
-  line-height: 125%; /* 20/16 */
-  margin-bottom: 0px;
+  display: block;
+  max-width: 80px;
+  margin: 5px auto;
+  padding: 5px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 18px;
+  font-size: 14px;
+  text-transform:capitalize;
 }
 .button__back:hover {
   transform: scale(1.2);
