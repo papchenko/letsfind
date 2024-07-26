@@ -10,7 +10,7 @@
 			opacity: 0;
 		}
 	</style>
-	<link rel="stylesheet" href="css/style.min.css?_v=20240709112057">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240726093134">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,18 +41,22 @@
 						<div class="hero-page__content">
 							<div class="hero-page__body">
 								<div class="hero-page__text">
-									try to find three secret places
+									try to find secret places in time
 								</div>
 								<h1 class="hero-page__title title">
-									Ready to find <span>secret places?</span> It looks like it will be a great adventure!
+									Ready to find <span>secret locations</span> in limited time!? It looks like it's going to be a great adventure!
 								</h1>
+								<div class="hero-page__textwarning">
+									<p>Read the rules before starting the game! and watch the video tutorial. After pressing <span>I am ready!</span>, you will have
+									<p>45 minutes</p> to find the first secret location!</p>
+								</div>
 							</div>
-							<div id="countdown">5</div>
+							<button id="show-section-button">I am ready!</button>
 						</div>
 					</div>
 				</div>
 			</section>
-			<section data-watch="navigator" data-prlx-parent data-prlx-mouse-wrapper class="page__quest_one quest-one">
+			<section id="hidden-section" style="display: none;" data-watch="navigator" data-prlx-parent data-prlx-mouse-wrapper class="page__quest_one quest-one">
 				<div class="quest-one__container_big">
 					<div class="quest-one__container">
 						<div data-coefficient="200" data-prlx data-direction="-1" class="quest-one__image image-block ib-1">
@@ -132,7 +136,6 @@
 					<div class="form-question">
 						<form action="#" class="form form_three">
 							<input autocomplete="off" type="text" name="form[]" data-error="Error" placeholder="Write here secret code for open secret place 3" class="form__input input_field-three">
-							<!-- <button data-popup="#popup__alert" type="submit" class="form__button button submit-three">Enter Code</button> -->
 							<button data-popup="#popup__alert" type="submit" class="form__button button button-arrow submit-three"><img src="img/icons/arrow.svg" alt="Arrow"></button>
 							<button type="submit" class=" button submit-three-premium premium">Get Premium</button>
 						</form>
@@ -214,13 +217,15 @@
 							</div>
 							<div class="text-section">
 								<p class="how-page__text text-section__value">
-									This adventure starts with the fact that you can see the first location right away,
-									you will also have access to hints and carefully read the description of the secret place!
-									When you find the first location, there will be a QRcode on the spot that you can scan,
-									and then you will open secret location 2, when you find it,
-									scan the QRcode and see where secret location 3 is.
+									This adventure starts with you using the promo code to open the first secret location,
+									you will also have access to hints and read the description of the secret location carefully!
+									And when you open the first secret place, you will have 45 minutes to find the next secret place,
+									but if you don't have time to find it, this resource will be unavailable to you for 24 hours!
+									When you find the first spot, there will be a QR code on the spot that you can scan,
+									and then you will unlock secret location 2 when you find it,
+									scan the QR code and see where the secret location 3 is.
 									Take a selfie with secret location 3 and send it to me!
-									Discover all the secret places and get a reward!
+									Discover all the secret places and get rewarded!
 								</p>
 								<div class="text-section__mask"></div>
 							</div>
@@ -266,105 +271,9 @@
 				</div>
 			</section>
 		</main>
-		<!-- <footer class="footer">
-	<div class="footer__container">
-		<div class="footer__content">
-			<section data-da=".menu__body, 767.98" class="page__download download">
-				<div class="download__container-big">
-					<div class="download__container">
-						<div class="download__body">
-							<h2 class="download__title title">Download Lets Find app and get even more pleasure and comfort.</h2>
-							<div class="download__apps">
-								<a href="#" class="download__app">
-									<picture><source srcset="img/icons/applestore.webp" type="image/webp"><img src="img/icons/applestore.png" alt="AppStore"></picture>
-								</a>
-								<a href="#" class="download__app">
-									<picture><source srcset="img/icons/googleplay.webp" type="image/webp"><img src="img/icons/googleplay.png" alt="GooglePlay"></picture>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-			<div data-da=".footer__body, 479.98" class="footer__subscribe subscribe-footer">
-				<div class="subscribe-footer__body">
-					<h4 class="subscribe-footer__title title title_s28">Do you want to help the project?</h4>
-					<h4 class="subscribe-footer__text text">If you have suggestions for improving the project or found bugs. Write me!</h4>
-				</div>
-				<form action="#" class="subscribe-footer__form form">
-					<input data-required="email" autocomplete="off" type="text" name="form[]" data-error="Error" placeholder="Send Your Response" class="form__input">
-					<button type="submit" class="form__button button button-footer">Send</button>
-				</form>
-			</div>
-			<div class="footer__body">
-				<div class="footer__info">
-					<div class="footer__logo">
-						<img src="img/logo.svg" alt="Logo">
-					</div>
-					<div class="footer__text">This is an entertaining project created for a good time both alone and with friends.</div>
-					<ul class="footer__social social">
-						<li class="social__item">
-							<a href="#" class="social__link">
-								<img src="img/icons/youtube.svg" alt="YouTube">
-							</a>
-						</li>
-						<li class="social__item">
-							<a href="#" class="social__link">
-								<img src="img/icons/github.svg" alt="Github">
-							</a>
-						</li>
-						<li class="social__item">
-							<a href="#" class="social__link">
-								<img src="img/icons/linkedin.svg" alt="Linkedin">
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div class="footer__menu menu-footer">
-					<div data-spollers="479" data-one-spoller class="menu-footer__spollers">
-						<details class="menu-footer__block">
-							<summary class="menu-footer__title">Company</summary>
-							<ul class="menu-footer__list">
-								<li class="menu-footer__item">
-									<a href="#" class="menu-footer__link">About</a>
-								</li>
-								<li class="menu-footer__item">
-									<a href="#" class="menu-footer__link">Services</a>
-								</li>
-								<li class="menu-footer__item">
-									<a href="#" class="menu-footer__link">Contact</a>
-								</li>
-							</ul>
-						</details>
-						<details class="menu-footer__block">
-							<summary class="menu-footer__title">Legal</summary>
-							<ul class="menu-footer__list">
-								<li class="menu-footer__item">
-									<a href="#" class="menu-footer__link">Terms</a>
-								</li>
-								<li class="menu-footer__item">
-									<a href="#" class="menu-footer__link">Privacy</a>
-								</li>
-								<li class="menu-footer__item">
-									<a href="#" class="menu-footer__link">Coockies</a>
-								</li>
-								<li class="menu-footer__item">
-									<a href="#" class="menu-footer__link">License</a>
-								</li>
-							</ul>
-						</details>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="footer__copy">2024 create by | <a target="_blank" href="http://papchenko.com"><span>papchenko.com</span></a></div>
-	</div>
-</footer> -->
-
 		<footer class="footer">
 			<div class="footer__container">
 				<div class="footer__content">
-					<!-- <section data-da=".menu__body, 767.98" class="page__download download"> -->
 					<section data-da=".iv-1, 767.98" class="page__download download">
 						<div class="download__container-big">
 							<div class="download__container">
@@ -382,7 +291,6 @@
 							</div>
 						</div>
 					</section>
-					<!-- <div data-da=".footer__body, 479.98" class="footer__subscribe subscribe-footer"> -->
 					<div data-da=".menu__body, 479.98" class="footer__subscribe subscribe-footer if-1">
 						<div class="subscribe-footer__body">
 							<h4 class="subscribe-footer__title">Do you want to help the project?</h4>
@@ -397,7 +305,6 @@
 						<div class="footer__info">
 							<div class="footer__logo">
 								<img src="img/logo.svg" alt="Logo">
-								<!-- <div class="footer__version">v1.0.1</div> -->
 							</div>
 							<div class="footer__text">This is an entertaining project created for a good time both alone and with friends.</div>
 							<div class="footer__donate donate-footer">
@@ -510,9 +417,18 @@
 					</button>
 					<div class="popup__body">
 						<div class="update__content">
-							<div class="update__title">versoin 1.0.1 (09.07.2024) (Current) Release</div>
+							<div class="update__title title">versoin 1.0.1 (09.07.2024) Release</div>
 							<ul class="update__desc">
 								<li class="desc__list">Upload to web hosting</li>
+							</ul>
+						</div>
+						<div class="update__content">
+							<div class="update__title title title-current">versoin 2.0.1 (26.07.2024) (Current) Release</div>
+							<ul class="update__desc">
+								<li class="desc__list">added a counter for which you have to find a secret place in time.</li>
+								<li class="desc__list">added if you don't have time, the resource is blocked.</li>
+								<li class="desc__list">changes in the main section, added text, game start button, animations.</li>
+								<li class="desc__list">modified block with video viewing.</li>
 							</ul>
 						</div>
 					</div>
@@ -520,7 +436,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="js/app.min.js?_v=20240709112057"></script>
+	<script src="js/app.min.js?_v=20240726093134"></script>
 </body>
 
 </html>

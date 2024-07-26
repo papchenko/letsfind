@@ -4571,6 +4571,9 @@
         const hiddenForms = [ document.querySelector(".form_two"), document.querySelector(".form_three"), document.querySelector(".form_final") ];
         const secretValues = [ "24JHG50KL7", "NN88KU9143", "Y0PF6089D2" ];
         const storageKeys = [ "hiddenTextOneVisibility", "hiddenTextTwoVisibility", "hiddenTextThreeVisibility" ];
+        const timerKey = "timerStart";
+        const timerDuration = 45 * 60 * 1e3;
+        const lockDuration = 24 * 60 * 60 * 1e3;
         const sets = acceptButtons.map(((button, index) => ({
             acceptButton: button,
             inputField: inputFields[index],
@@ -4581,6 +4584,36 @@
         })));
         const popupAlerts = document.querySelector(".popup-alert");
         const popupAlertWrapper = document.querySelector(".popup__alert_wrapper");
+        const timerElement = document.createElement("div");
+        timerElement.id = "timer";
+        timerElement.style.position = "fixed";
+        timerElement.style.top = "10px";
+        timerElement.style.right = "10px";
+        timerElement.style.fontSize = "20px";
+        timerElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        timerElement.style.color = "white";
+        timerElement.style.padding = "5px 10px";
+        timerElement.style.borderRadius = "5px";
+        timerElement.style.zIndex = "1000";
+        document.body.appendChild(timerElement);
+        const fullScreenMessage = document.createElement("div");
+        fullScreenMessage.id = "full-screen-message";
+        fullScreenMessage.style.position = "fixed";
+        fullScreenMessage.style.top = "0";
+        fullScreenMessage.style.left = "0";
+        fullScreenMessage.style.width = "100%";
+        fullScreenMessage.style.height = "100%";
+        fullScreenMessage.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+        fullScreenMessage.style.color = "white";
+        fullScreenMessage.style.display = "flex";
+        fullScreenMessage.style.justifyContent = "center";
+        fullScreenMessage.style.alignItems = "center";
+        fullScreenMessage.style.flexDirection = "column";
+        fullScreenMessage.style.fontSize = "30px";
+        fullScreenMessage.style.zIndex = "1001";
+        fullScreenMessage.style.display = "none";
+        fullScreenMessage.innerHTML = '<div>Ви не встигли!</div><div id="lock-timer"></div>';
+        document.body.appendChild(fullScreenMessage);
         async function loadPopupContent() {
             try {
                 const response = await fetch("html/popup-alert.html");
@@ -4605,7 +4638,46 @@
                 };
             }
         }
-        async function handleButtonClick(set) {
+        function startTimer(duration, display, callback) {
+            let minutes, seconds;
+            const interval = setInterval((() => {
+                const now = Date.now();
+                const timeLeft = duration - (now - parseInt(localStorage.getItem(timerKey), 10));
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    display.textContent = "00:00";
+                    callback();
+                    return;
+                }
+                minutes = parseInt(timeLeft / 6e4, 10);
+                seconds = parseInt(timeLeft % 6e4 / 1e3, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+            }), 1e3);
+        }
+        function startLockTimer(duration, display) {
+            let hours, minutes, seconds;
+            const interval = setInterval((() => {
+                const now = Date.now();
+                const timeLeft = duration - (now - parseInt(localStorage.getItem(timerKey), 10));
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    display.textContent = "00:00:00";
+                    localStorage.removeItem(timerKey);
+                    fullScreenMessage.style.display = "none";
+                    return;
+                }
+                hours = parseInt(timeLeft / 36e5, 10);
+                minutes = parseInt(timeLeft % 36e5 / 6e4, 10);
+                seconds = parseInt(timeLeft % 6e4 / 1e3, 10);
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = hours + ":" + minutes + ":" + seconds;
+            }), 1e3);
+        }
+        async function handleButtonClick(set, index) {
             const {acceptButton, inputField, hiddenText, hiddenForms, secretValue, storageKey} = set;
             if (!acceptButton || !inputField || !hiddenText || !hiddenForms) {
                 console.warn("One or more elements not found:", {
@@ -4626,6 +4698,17 @@
                     inputField.style.display = "none";
                     localStorage.setItem(storageKey, "visible");
                     popupAlerts.innerHTML = popupContent.correctMessageContent;
+                    if (index < sets.length - 1) {
+                        const timerStart = Date.now();
+                        localStorage.setItem(timerKey, timerStart);
+                        startTimer(timerDuration, timerElement, (() => {
+                            fullScreenMessage.style.display = "flex";
+                            const lockTimerElement = document.getElementById("lock-timer");
+                            const lockStart = Date.now();
+                            localStorage.setItem(timerKey, lockStart);
+                            startLockTimer(lockDuration, lockTimerElement);
+                        }));
+                    } else localStorage.removeItem(timerKey);
                 } else popupAlerts.innerHTML = popupContent.wrongMessageContent;
                 popupAlertWrapper.style.display = "block";
                 setTimeout((() => {
@@ -4648,15 +4731,132 @@
             }
         }
         sets.forEach(handleButtonClick);
+        const timerStart = localStorage.getItem(timerKey);
+        if (timerStart) {
+            const now = Date.now();
+            const timeElapsed = now - parseInt(timerStart, 10);
+            if (timeElapsed >= timerDuration + lockDuration) localStorage.removeItem(timerKey); else if (timeElapsed >= timerDuration) {
+                fullScreenMessage.style.display = "flex";
+                const lockTimerElement = document.getElementById("lock-timer");
+                startLockTimer(lockDuration - (timeElapsed - timerDuration), lockTimerElement);
+            } else startTimer(timerDuration - timeElapsed, timerElement, (() => {
+                fullScreenMessage.style.display = "flex";
+                const lockTimerElement = document.getElementById("lock-timer");
+                const lockStart = Date.now();
+                localStorage.setItem(timerKey, lockStart);
+                startLockTimer(lockDuration, lockTimerElement);
+            }));
+        }
     }));
-    document.getElementById("copyUrlButton").addEventListener("click", (function(e) {
-        e.preventDefault();
-        const dummy = document.createElement("textarea");
-        dummy.value = window.location.href;
-        document.body.appendChild(dummy);
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
+    document.addEventListener("DOMContentLoaded", (function() {
+        const showButton = document.getElementById("show-section-button");
+        const hiddenSection = document.getElementById("hidden-section");
+        const timerElement = document.createElement("div");
+        timerElement.id = "timer";
+        timerElement.style.position = "fixed";
+        timerElement.style.top = "10px";
+        timerElement.style.right = "10px";
+        timerElement.style.fontSize = "20px";
+        timerElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        timerElement.style.color = "white";
+        timerElement.style.padding = "5px 10px";
+        timerElement.style.borderRadius = "5px";
+        timerElement.style.zIndex = "1000";
+        document.body.appendChild(timerElement);
+        const fullScreenMessage = document.createElement("div");
+        fullScreenMessage.id = "full-screen-message";
+        fullScreenMessage.style.position = "fixed";
+        fullScreenMessage.style.top = "0";
+        fullScreenMessage.style.left = "0";
+        fullScreenMessage.style.width = "100%";
+        fullScreenMessage.style.height = "100%";
+        fullScreenMessage.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+        fullScreenMessage.style.color = "white";
+        fullScreenMessage.style.display = "flex";
+        fullScreenMessage.style.justifyContent = "center";
+        fullScreenMessage.style.alignItems = "center";
+        fullScreenMessage.style.flexDirection = "column";
+        fullScreenMessage.style.fontSize = "30px";
+        fullScreenMessage.style.zIndex = "1001";
+        fullScreenMessage.style.display = "none";
+        fullScreenMessage.innerHTML = '<div>Time is up! Try again later:</div><div id="lock-timer"></div>';
+        document.body.appendChild(fullScreenMessage);
+        const timerKey = "timerStart";
+        const timerDuration = 45 * 60 * 1e3;
+        const lockDuration = 24 * 60 * 60 * 1e3;
+        function startTimer(duration, display, callback) {
+            let minutes, seconds;
+            const interval = setInterval((() => {
+                const now = Date.now();
+                const timeLeft = duration - (now - parseInt(localStorage.getItem(timerKey), 10));
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    display.textContent = "00:00";
+                    callback();
+                    return;
+                }
+                minutes = parseInt(timeLeft / 6e4, 10);
+                seconds = parseInt(timeLeft % 6e4 / 1e3, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+            }), 1e3);
+        }
+        function startLockTimer(duration, display) {
+            let hours, minutes, seconds;
+            const interval = setInterval((() => {
+                const now = Date.now();
+                const timeLeft = duration - (now - parseInt(localStorage.getItem(timerKey), 10));
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    display.textContent = "00:00:00";
+                    localStorage.removeItem(timerKey);
+                    fullScreenMessage.style.display = "none";
+                    return;
+                }
+                hours = parseInt(timeLeft / 36e5, 10);
+                minutes = parseInt(timeLeft % 36e5 / 6e4, 10);
+                seconds = parseInt(timeLeft % 6e4 / 1e3, 10);
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = hours + ":" + minutes + ":" + seconds;
+            }), 1e3);
+        }
+        if (localStorage.getItem("sectionShown") === "true") {
+            hiddenSection.style.display = "block";
+            showButton.style.display = "none";
+            const timerStart = localStorage.getItem(timerKey);
+            if (timerStart) {
+                const now = Date.now();
+                const timeElapsed = now - parseInt(timerStart, 10);
+                if (timeElapsed >= timerDuration + lockDuration) localStorage.removeItem(timerKey); else if (timeElapsed >= timerDuration) {
+                    fullScreenMessage.style.display = "flex";
+                    const lockTimerElement = document.getElementById("lock-timer");
+                    startLockTimer(lockDuration - (timeElapsed - timerDuration), lockTimerElement);
+                } else startTimer(timerDuration - timeElapsed, timerElement, (() => {
+                    fullScreenMessage.style.display = "flex";
+                    const lockTimerElement = document.getElementById("lock-timer");
+                    const lockStart = Date.now();
+                    localStorage.setItem(timerKey, lockStart);
+                    startLockTimer(lockDuration, lockTimerElement);
+                }));
+            }
+        } else hiddenSection.style.display = "none";
+        showButton.addEventListener("click", (function() {
+            hiddenSection.style.display = "block";
+            showButton.style.display = "none";
+            localStorage.setItem("sectionShown", "true");
+            const timerStart = Date.now();
+            localStorage.setItem(timerKey, timerStart);
+            startTimer(timerDuration, timerElement, (() => {
+                fullScreenMessage.style.display = "flex";
+                const lockTimerElement = document.getElementById("lock-timer");
+                const lockStart = Date.now();
+                localStorage.setItem(timerKey, lockStart);
+                startLockTimer(lockDuration, lockTimerElement);
+            }));
+        }));
     }));
     function textOpacityScroll() {
         const items = document.querySelectorAll(".text-section");
@@ -4682,37 +4882,14 @@
         }));
     }
     textOpacityScroll();
-    window.addEventListener("load", (function() {
-        const countdownElement = document.getElementById("countdown");
-        const heroElement = document.querySelector(".page__hero");
-        let timeLeft = 5;
-        function disableScroll() {
-            document.body.style.overflow = "hidden";
-        }
-        function enableScroll() {
-            document.body.style.overflow = "";
-        }
-        if (!sessionStorage.getItem("scrolled")) {
-            disableScroll();
-            const countdownTimer = setInterval((function() {
-                timeLeft--;
-                countdownElement.textContent = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(countdownTimer);
-                    enableScroll();
-                    window.scrollBy({
-                        top: 0,
-                        behavior: "smooth"
-                    });
-                    sessionStorage.setItem("scrolled", "true");
-                    countdownElement.style.display = "none";
-                    heroElement.style.display = "none";
-                }
-            }), 1e3);
-        } else {
-            countdownElement.style.display = "none";
-            heroElement.style.display = "none";
-        }
+    document.getElementById("copyUrlButton").addEventListener("click", (function(e) {
+        e.preventDefault();
+        const dummy = document.createElement("textarea");
+        dummy.value = window.location.href;
+        document.body.appendChild(dummy);
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
     }));
     window["FLS"] = true;
     isWebp();
